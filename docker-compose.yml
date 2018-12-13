@@ -1,0 +1,17 @@
+version: "3.7"
+# Blocnets Client and Middleware stack using the latest docker images.
+# DEV NOTE: Must be logged into docker and have access to the Blocnets Repo.
+services: 
+  middleware:
+    image: blocnets/minniemai:latest
+    container_name: minniemai
+    ports: ['8000:8000']
+    networks: ['stack']
+  client: 
+    image: blocnets/web-app:latest
+    container_name: client
+    ports: ['3000:3000']
+    networks: ['stack']
+    depends_on: 
+      - middleware
+networks: {stack: {}}
