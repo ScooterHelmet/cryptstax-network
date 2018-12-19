@@ -14,4 +14,38 @@ services:
     networks: ['stack']
     depends_on: 
       - middleware
+  membersrvc:
+    image: hyperledger/fabric-membersrvc
+    ports: ['50051:50051']
+    networks: ['stack']
+    command: membersrvc
+  vp0:
+    image: hyperledger/fabric-peer
+    ports: ['5000:5000', '30303:30303', '30304:30304']
+    environment:
+      - CORE_PEER_ADDRESSAUTODETECT=true
+      - CORE_VM_ENDPOINT=unix:///var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_ID=vp0
+      - CORE_SECURITY_ENROLLID=test_vp0
+      - CORE_SECURITY_ENROLLSECRET=MwYpmSRjupbT0
+      networks: ['stack']
+    depends_on:
+      - membersrvc
+    command: sh -c "sleep 5; peer node start"
+  vp1:
+    image: hyperledger/fabric-peer
+    ports: ['5001:5001', '30305:30305', '30306:30306']
+    environment:
+      - CORE_PEER_ADDRESSAUTODETECT=true
+      - CORE_VM_ENDPOINT=unix:///var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_DISCOVERY_ROOTNODE=vp0:30303
+      - CORE_PEER_ID=vp1
+      - CORE_SECURITY_ENROLLID=test_vp1
+      - CORE_SECURITY_ENROLLSECRET=MwYpmSRjupbT1
+    networks: ['stack']
+    depends_on:
+      - membersrvc
+      - vp0
 networks: {stack: {}}
