@@ -1,6 +1,5 @@
 version: "3.7"
-# Blocnets Client and Middleware stack using the latest docker images.
-# DEV NOTE: Must be logged into docker and have access to the Blocnets Repo.
+
 networks: {stack: {}}
 
 services: 
