@@ -42,7 +42,7 @@ function printHelp() {
   echo "      - 'restart' - restart the network"
   echo "      - 'generate' - generate required certificates and genesis block"
   echo "      - 'upgrade'  - upgrade the network from version 1.3.x to 1.4.0"
-  echo "    -c <channel name> - channel name to use (defaults to \"mychannel\")"
+  echo "    -c <channel name> - channel name to use (defaults to \"cryptstax-channel\")"
   echo "    -t <timeout> - CLI timeout duration in seconds (defaults to 10)"
   echo "    -d <delay> - delay duration in seconds (defaults to 3)"
   echo "    -f <docker-compose-file> - specify which docker-compose file use (defaults to docker-compose-cli.yaml)"
@@ -56,12 +56,12 @@ function printHelp() {
   echo "Typically, one would first generate the required certificates and "
   echo "genesis block, then bring up the network. e.g.:"
   echo
-  echo "	byfn.sh generate -c mychannel"
-  echo "	byfn.sh up -c mychannel -s couchdb"
-  echo "        byfn.sh up -c mychannel -s couchdb -i 1.4.0"
+  echo "	byfn.sh generate -c cryptstax-channel"
+  echo "	byfn.sh up -c cryptstax-channel -s couchdb"
+  echo "        byfn.sh up -c cryptstax-channel -s couchdb -i 1.4.0"
   echo "	byfn.sh up -l node"
-  echo "	byfn.sh down -c mychannel"
-  echo "        byfn.sh upgrade -c mychannel"
+  echo "	byfn.sh down -c cryptstax-channel"
+  echo "        byfn.sh upgrade -c cryptstax-channel"
   echo
   echo "Taking all defaults:"
   echo "	byfn.sh generate"
@@ -193,7 +193,7 @@ function networkUp() {
 # and relaunch the orderer and peers with latest tag
 function upgradeNetwork() {
   if [[ "$IMAGETAG" == *"1.4"* ]] || [[ $IMAGETAG == "latest" ]]; then
-    docker inspect -f '{{.Config.Volumes}}' orderer.example.com | grep -q '/var/hyperledger/production/orderer'
+    docker inspect -f '{{.Config.Volumes}}' orderer.cryptstax.com | grep -q '/var/hyperledger/production/orderer'
     if [ $? -ne 0 ]; then
       echo "ERROR !!!! This network does not appear to start with fabric-samples >= v1.3.x?"
       exit 1
@@ -224,11 +224,11 @@ function upgradeNetwork() {
     docker-compose $COMPOSE_FILES up -d --no-deps cli
 
     echo "Upgrading orderer"
-    docker-compose $COMPOSE_FILES stop orderer.example.com
-    docker cp -a orderer.example.com:/var/hyperledger/production/orderer $LEDGERS_BACKUP/orderer.example.com
-    docker-compose $COMPOSE_FILES up -d --no-deps orderer.example.com
+    docker-compose $COMPOSE_FILES stop orderer.cryptstax.com
+    docker cp -a orderer.cryptstax.com:/var/hyperledger/production/orderer $LEDGERS_BACKUP/orderer.cryptstax.com
+    docker-compose $COMPOSE_FILES up -d --no-deps orderer.cryptstax.com
 
-    for PEER in peer0.org1.example.com peer1.org1.example.com peer0.org2.example.com peer1.org2.example.com; do
+    for PEER in peer0.org1.cryptstax.com peer1.org1.cryptstax.com peer0.org2.cryptstax.com peer1.org2.cryptstax.com; do
       echo "Upgrading peer $PEER"
 
       # Stop the peer and backup its ledger
@@ -276,7 +276,7 @@ function networkDown() {
     removeUnwantedImages
     # remove orderer block and other channel configuration transactions and certs
     rm -rf channel-artifacts/*.block channel-artifacts/*.tx crypto-config ./org3-artifacts/crypto-config/ channel-artifacts/org3.json
-    # remove the docker-compose yaml file that was customized to the example
+    # remove the docker-compose yaml file that was customized to the cryptstax
     rm -f docker-compose-e2e.yaml
   fi
 }
@@ -300,11 +300,11 @@ function replacePrivateKey() {
   # The next steps will replace the template's contents with the
   # actual values of the private key file names for the two CAs.
   CURRENT_DIR=$PWD
-  cd crypto-config/peerOrganizations/org1.example.com/ca/
+  cd crypto-config/peerOrganizations/org1.cryptstax.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "s/CA1_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
-  cd crypto-config/peerOrganizations/org2.example.com/ca/
+  cd crypto-config/peerOrganizations/org2.cryptstax.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "s/CA2_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
@@ -376,7 +376,7 @@ function generateCerts() {
 # These headers are important, as we will pass them in as arguments when we create
 # our artifacts.  This file also contains two additional specifications that are worth
 # noting.  Firstly, we specify the anchor peers for each Peer Org
-# (``peer0.org1.example.com`` & ``peer0.org2.example.com``).  Secondly, we point to
+# (``peer0.org1.cryptstax.com`` & ``peer0.org2.cryptstax.com``).  Secondly, we point to
 # the location of the MSP directory for each member, in turn allowing us to store the
 # root certificates for each Org in the orderer genesis block.  This is a critical
 # concept. Now any network entity communicating with the ordering service can have
@@ -474,8 +474,8 @@ OS_ARCH=$(echo "$(uname -s | tr '[:upper:]' '[:lower:]' | sed 's/mingw64_nt.*/wi
 CLI_TIMEOUT=10
 # default for delay between commands
 CLI_DELAY=3
-# channel name defaults to "mychannel"
-CHANNEL_NAME="mychannel"
+# channel name defaults to "cryptstax-channel"
+CHANNEL_NAME="cryptstax-channel"
 # use this as the default docker-compose yaml definition
 COMPOSE_FILE=docker-compose-cli.yaml
 #

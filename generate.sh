@@ -1,7 +1,7 @@
 # Generate Cryptographic
 export PATH=$GOPATH/src/github.com/hyperledger/fabric/build/bin:${PWD}/../bin:${PWD}:$PATH
 export FABRIC_CFG_PATH=${PWD}
-CHANNEL_NAME=mychannel
+CHANNEL_NAME=cryptstax-channel
 
 # remove previous crypto material and config transactions
 rm -fr config/*

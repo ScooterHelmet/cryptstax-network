@@ -25,7 +25,7 @@ Organizations:
         ID: OrdererMSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: crypto-config/ordererOrganizations/blocnets.com/msp
+        MSPDir: crypto-config/ordererOrganizations/cryptstax.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -49,7 +49,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: Org1MSP
 
-        MSPDir: crypto-config/peerOrganizations/org1.blocnets.com/msp
+        MSPDir: crypto-config/peerOrganizations/org1.cryptstax.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -70,7 +70,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.org1.blocnets.com
+            - Host: peer0.org1.cryptstax.com
               Port: 7051
 
     - &Org2
@@ -81,7 +81,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: Org2MSP
 
-        MSPDir: crypto-config/peerOrganizations/org2.blocnets.com/msp
+        MSPDir: crypto-config/peerOrganizations/org2.cryptstax.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -101,7 +101,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.org2.blocnets.com
+            - Host: peer0.org2.cryptstax.com
               Port: 7051
 
     - &Org3
@@ -112,7 +112,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: Org3MSP
 
-        MSPDir: crypto-config/peerOrganizations/org3.blocnets.com/msp
+        MSPDir: crypto-config/peerOrganizations/org3.cryptstax.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -132,7 +132,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.org3.blocnets.com
+            - Host: peer0.org3.cryptstax.com
               Port: 7051
 
     - &Org4
@@ -143,7 +143,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: Org4MSP
 
-        MSPDir: crypto-config/peerOrganizations/org4.blocnets.com/msp
+        MSPDir: crypto-config/peerOrganizations/org4.cryptstax.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -163,7 +163,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.org4.blocnets.com
+            - Host: peer0.org4.cryptstax.com
               Port: 7051
 
 
@@ -271,7 +271,7 @@ Orderer: &OrdererDefaults
     OrdererType: solo
 
     Addresses:
-        - orderer.blocnets.com:7050
+        - orderer.cryptstax.com:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
@@ -398,7 +398,7 @@ Profiles:
             OrdererType: kafka
             Kafka:
                 Brokers:
-                - kafka.blocnets.com:9092
+                - kafka.cryptstax.com:9092
 
             Organizations:
             - *OrdererOrg

@@ -11,7 +11,7 @@ OrdererOrgs:
   # Orderer
   # ---------------------------------------------------------------------------
   - Name: Orderer
-    Domain: blocnets.com
+    Domain: cryptstax.com
     # ---------------------------------------------------------------------------
     # "Specs" - See PeerOrgs below for complete description
     # ---------------------------------------------------------------------------
@@ -25,7 +25,7 @@ PeerOrgs:
   # Org1
   # ---------------------------------------------------------------------------
   - Name: Org1
-    Domain: org1.blocnets.com
+    Domain: org1.cryptstax.com
     EnableNodeOUs: true
     # ---------------------------------------------------------------------------
     # "Specs"
@@ -44,8 +44,8 @@ PeerOrgs:
     #                 Org.Domain, respectively.
     # ---------------------------------------------------------------------------
     # Specs:
-    #   - Hostname: foo # implicitly "foo.org1.blocnets.com"
-    #     CommonName: foo27.org5.blocnets.com # overrides Hostname-based FQDN set above
+    #   - Hostname: foo # implicitly "foo.org1.cryptstax.com"
+    #     CommonName: foo27.org5.cryptstax.com # overrides Hostname-based FQDN set above
     #   - Hostname: bar
     #   - Hostname: baz
     # ---------------------------------------------------------------------------
@@ -75,21 +75,21 @@ PeerOrgs:
   # Org2: See "Org1" for full specification
   # ---------------------------------------------------------------------------
   - Name: Org2
-    Domain: org2.blocnets.com
+    Domain: org2.cryptstax.com
     EnableNodeOUs: true
     Template:
       Count: 2
     Users:
       Count: 1
   - Name: Org3
-    Domain: org3.blocnets.com
+    Domain: org3.cryptstax.com
     EnableNodeOUs: true
     Template:
       Count: 2
     Users:
       Count: 1
   - Name: Org4
-    Domain: org4.blocnets.com
+    Domain: org4.cryptstax.com
     EnableNodeOUs: true
     Template:
       Count: 2
