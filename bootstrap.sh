@@ -4,7 +4,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-
 # if version not passed in, default to latest released version
 export VERSION=1.4.0-rc2
 # if ca version not passed in, default to latest released version
