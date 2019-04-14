@@ -35,7 +35,7 @@ export VERBOSE=false
 # Print the usage message
 function printHelp() {
   echo "Usage: "
-  echo "  byfn.sh <mode> [-c <channel name>] [-t <timeout>] [-d <delay>] [-f <docker-compose-file>] [-s <dbtype>] [-l <language>] [-o <consensus-type>] [-i <imagetag>] [-v]"
+  echo "  build-network.sh <mode> [-c <channel name>] [-t <timeout>] [-d <delay>] [-f <docker-compose-file>] [-s <dbtype>] [-l <language>] [-o <consensus-type>] [-i <imagetag>] [-v]"
   echo "    <mode> - one of 'up', 'down', 'restart', 'generate' or 'upgrade'"
   echo "      - 'up' - bring up the network with docker-compose up"
   echo "      - 'down' - clear the network with docker-compose down"
@@ -51,22 +51,22 @@ function printHelp() {
   echo "    -o <consensus-type> - the consensus-type of the ordering service: solo (default) or kafka"
   echo "    -i <imagetag> - the tag to be used to launch the network (defaults to \"latest\")"
   echo "    -v - verbose mode"
-  echo "  byfn.sh -h (print this message)"
+  echo "  build-network.sh -h (print this message)"
   echo
   echo "Typically, one would first generate the required certificates and "
   echo "genesis block, then bring up the network. e.g.:"
   echo
-  echo "	byfn.sh generate -c cryptstax-channel"
-  echo "	byfn.sh up -c cryptstax-channel -s couchdb"
-  echo "        byfn.sh up -c cryptstax-channel -s couchdb -i 1.4.0"
-  echo "	byfn.sh up -l node"
-  echo "	byfn.sh down -c cryptstax-channel"
-  echo "        byfn.sh upgrade -c cryptstax-channel"
+  echo "	build-network.sh generate -c cryptstax-channel"
+  echo "	build-network.sh up -c cryptstax-channel -s couchdb"
+  echo "        build-network.sh up -c cryptstax-channel -s couchdb -i 1.4.0"
+  echo "	build-network.sh up -l node"
+  echo "	build-network.sh down -c cryptstax-channel"
+  echo "        build-network.sh upgrade -c cryptstax-channel"
   echo
   echo "Taking all defaults:"
-  echo "	byfn.sh generate"
-  echo "	byfn.sh up"
-  echo "	byfn.sh down"
+  echo "	build-network.sh generate"
+  echo "	build-network.sh up"
+  echo "	build-network.sh down"
 }
 
 # Ask user for confirmation to proceed
@@ -410,9 +410,9 @@ function generateChannelArtifacts() {
   echo "CONSENSUS_TYPE="$CONSENSUS_TYPE
   set -x
   if [ "$CONSENSUS_TYPE" == "solo" ]; then
-    configtxgen -profile TwoOrgsOrdererGenesis -channelID byfn-sys-channel -outputBlock ./channel-artifacts/genesis.block
+    configtxgen -profile TwoOrgsOrdererGenesis -channelID build-network-sys-channel -outputBlock ./channel-artifacts/genesis.block
   elif [ "$CONSENSUS_TYPE" == "kafka" ]; then
-    configtxgen -profile SampleDevModeKafka -channelID byfn-sys-channel -outputBlock ./channel-artifacts/genesis.block
+    configtxgen -profile SampleDevModeKafka -channelID build-network-sys-channel -outputBlock ./channel-artifacts/genesis.block
   else
     set +x
     echo "unrecognized CONSESUS_TYPE='$CONSENSUS_TYPE'. exiting"
